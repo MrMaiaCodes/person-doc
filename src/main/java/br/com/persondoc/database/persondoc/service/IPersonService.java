@@ -1,6 +1,7 @@
-package br.com.persondoc.database.persondoc.service.interfaces;
+package br.com.persondoc.database.persondoc.service;
 
 import br.com.persondoc.database.persondoc.repository.entities.Person;
+import br.com.persondoc.database.persondoc.service.IService;
 
 public interface IPersonService extends IService<Person> {
 

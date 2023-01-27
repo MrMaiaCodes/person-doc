@@ -1,4 +1,4 @@
-package br.com.persondoc.database.persondoc.service.interfaces;
+package br.com.persondoc.database.persondoc.service;
 
 import java.util.List;
 

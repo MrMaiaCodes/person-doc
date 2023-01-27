@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "TB_PERSON")
@@ -28,6 +29,13 @@ public class Person {
 
     @Column(name = "DT_AGE")
     private Long age;
+
+    @Column(name = "DT_DOCUMENT_LIST")
+    private List<Document> documents;
+
+    public List<Document> getDocuments() {return documents;}
+
+    public void setDocuments(List<Document> documents) {this.documents = documents;}
 
     public String getName(){
         return name;
