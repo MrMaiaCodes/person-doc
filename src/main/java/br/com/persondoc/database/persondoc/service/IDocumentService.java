@@ -4,5 +4,5 @@ import br.com.persondoc.database.persondoc.repository.entities.Document;
 
 public interface IDocumentService extends IService<Document> {
 
-    Document findDocumentByNumber(String documentName);
+    Document findDocumentByNumber(Long documentNumber);
 }

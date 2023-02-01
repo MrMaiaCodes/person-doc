@@ -1,5 +1,9 @@
 package br.com.persondoc.database.persondoc.repository.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -17,6 +21,10 @@ import java.util.List;
                 @Parameter(name = "increment_size", value = "1")
         }
 )
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Person {
 
     @Id
@@ -30,27 +38,9 @@ public class Person {
     @Column(name = "DT_AGE")
     private Long age;
 
-    @Column(name = "DT_DOCUMENT_LIST")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "DT_DOCUMENTS")
     private List<Document> documents;
 
-    public List<Document> getDocuments() {return documents;}
-
-    public void setDocuments(List<Document> documents) {this.documents = documents;}
-
-    public String getName(){
-        return name;
-    }
-
-    public void setName(String name){
-        this.name = name;
-    }
-
-    public Long getId(){ return id; }
-
-    public void setId(Long id) {this.id = id; }
-
-    public Long getAge(){ return age; }
-
-    public void setAge(Long age) {this.age = age; }
 
 }

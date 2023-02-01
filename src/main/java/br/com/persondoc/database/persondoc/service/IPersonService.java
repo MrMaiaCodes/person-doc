@@ -7,5 +7,6 @@ public interface IPersonService extends IService<Person> {
 
     Person findPersonByName(String personName);
 
-    void addDocument(String personName, String documentNumber);
+
+    void addDocument(String personName, Long documentNumber);
 }

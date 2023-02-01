@@ -1,8 +1,11 @@
 package br.com.persondoc.database.persondoc.repository.entities;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
-
 import javax.persistence.*;
 
 @Entity
@@ -16,6 +19,10 @@ import javax.persistence.*;
                 @Parameter(name = "increment_size", value = "1")
         }
 )
+@Builder
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Document {
 
     @Id
@@ -23,17 +30,11 @@ public class Document {
     @Column(name = "ID_DOCUMENT")
     private Long idNumber;
 
-    @Column(name = "DS_NAME")
-    private String holderName;
-
     @Column(name = "DT_TYPE")
-    private Long documentType;
+    private String documentType;
 
-    public Long getIdNumber() {
-        return idNumber;
-    }
+    @Column(name = "NUM_DOCUMENT")
+    private String documentNumber;
 
-    public void setIdNumber(Long idNumber) {
-        this.idNumber = idNumber;
-    }
+
 }

@@ -32,7 +32,7 @@ public class PersonService extends AbstractValidateService<Person> implements IP
     }
 
     @Override
-    public void addDocument(String personName, String documentNumber) {
+    public void addDocument(String personName, Long documentNumber) {
         var personFind = findPersonByName(personName);
         var documentFind = documentService.findDocumentByNumber(documentNumber);
 
@@ -44,7 +44,7 @@ public class PersonService extends AbstractValidateService<Person> implements IP
 
     @Override
     public Person save(Person person) {
-        if (validate(Person)) {
+        if (validate(person)) {
             personRepository.save(person);
             return person;
         } else {
@@ -54,13 +54,12 @@ public class PersonService extends AbstractValidateService<Person> implements IP
 
     @Override
     public void delete(Person person) {
-
-
+        personRepository.delete(person);
     }
 
     @Override
     public List<Person> listAll() {
-        return personRepository.listAll();
+        return personRepository.findAll();
     }
 
     @Override
