@@ -11,7 +11,7 @@ public class DocumentAdapter {
     public static Document convertTo(DocumentDTO documentDTO){
         return Document.builder()
                 .documentType(documentDTO.getDocumentType())
-                .idNumber(documentDTO.getIdNumber())
+                .documentNumber(documentDTO.getDocumentNumber())
                 .build();
     }
 

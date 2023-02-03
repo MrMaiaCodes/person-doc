@@ -18,6 +18,4 @@ public class PersonDTO {
 
     private Long age;
 
-    private List<DocumentDTO> documents;
-
 }

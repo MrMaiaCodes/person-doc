@@ -13,8 +13,6 @@ public class PersonDTOAdapter {
        return PersonDTO.builder()
                .name(person.getName())
                .age(person.getAge())
-               .id(person.getId())
-               .documents(DocumentDTOAdapter.convertToList(person.getDocuments()))
                .build();
     }
 

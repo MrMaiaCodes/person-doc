@@ -36,5 +36,11 @@ public class Document {
     @Column(name = "NUM_DOCUMENT")
     private String documentNumber;
 
+    public Long getIdNumber() {
+        return idNumber;
+    }
 
+    public void setIdNumber(Long idNumber) {
+        this.idNumber = idNumber;
+    }
 }

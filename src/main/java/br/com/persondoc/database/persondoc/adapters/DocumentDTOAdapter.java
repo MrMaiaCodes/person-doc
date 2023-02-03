@@ -13,7 +13,7 @@ public class DocumentDTOAdapter {
         DocumentDTO documentDTO = new DocumentDTO();
 
         documentDTO.setDocumentType(document.getDocumentType());
-        documentDTO.setIdNumber(document.getIdNumber());
+        documentDTO.setDocumentNumber(document.getDocumentNumber());
 
         return documentDTO;
     }

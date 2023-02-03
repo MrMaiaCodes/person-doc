@@ -12,8 +12,6 @@ public class PersonAdapter {
         return Person.builder()
                 .name(personDTO.getName())
                 .age(personDTO.getAge())
-                .id(personDTO.getId())
-                .documents(DocumentAdapter.convertToList(personDTO.getDocuments()))
                 .build();
     }
 

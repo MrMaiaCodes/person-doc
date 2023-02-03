@@ -13,5 +13,5 @@ public class DocumentDTO {
 
     private String documentType;
 
-    private Long idNumber;
+    private String documentNumber;
 }

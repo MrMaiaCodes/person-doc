@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class DocumentService extends AbstractValidateService<Document> implements IDocumentService {
+public class DocumentService  implements IDocumentService {
 
     @Autowired
     private IDocumentRepository documentRepository;
@@ -18,11 +18,9 @@ public class DocumentService extends AbstractValidateService<Document> implement
     @Override
     public Document save(Document document) {
 
-        if (validate(document)) {
             documentRepository.save(document);
             return document;
-        } else
-            return null;
+
     }
 
     @Override
@@ -43,7 +41,7 @@ public class DocumentService extends AbstractValidateService<Document> implement
         var documentFind = documentRepository.findDocumentByNumber(document.getIdNumber());
         documentFind.setDocumentType(document.getDocumentType());
         documentFind.setIdNumber(document.getIdNumber());
-        return null;
+        return documentFind;
     }
 
     @Override
@@ -57,9 +55,4 @@ public class DocumentService extends AbstractValidateService<Document> implement
         return null;
     }
 
-    @Override
-    protected boolean validate(Document document) {
-        return !validateStringIsNullOrBlank(document.getDocumentType())
-        && validateLongNotZero(document.getIdNumber());
-    }
 }

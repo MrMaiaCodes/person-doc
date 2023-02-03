@@ -42,5 +42,11 @@ public class Person {
     @JoinColumn(name = "DT_DOCUMENTS")
     private List<Document> documents;
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
