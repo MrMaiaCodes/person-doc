@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IDocumentRepository extends JpaRepository<Document, Long> {
 
-    @Query(value = "select d from Document d where d.idNumber = :documentNumber")
-    Document findDocumentByNumber(Long documentNumber);
+    @Query(value = "select d from Document d where d.documentNumber = :documentNumber")
+    Document findDocumentByNumber(String documentNumber);
 }

@@ -4,13 +4,14 @@ import br.com.persondoc.database.persondoc.api.dtos.requests.PersonDTO;
 import br.com.persondoc.database.persondoc.repository.entities.Person;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class PersonAdapter {
 
     public static Person convertTo(PersonDTO personDTO) {
         return Person.builder()
-                .name(personDTO.getName())
+                .name(personDTO.getName().toUpperCase(Locale.ROOT))
                 .age(personDTO.getAge())
                 .build();
     }

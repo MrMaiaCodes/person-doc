@@ -3,9 +3,10 @@ package br.com.persondoc.database.persondoc.api.apis;
 
 import br.com.persondoc.database.persondoc.adapters.DocumentAdapter;
 import br.com.persondoc.database.persondoc.adapters.DocumentDTOAdapter;
-import br.com.persondoc.database.persondoc.api.dtos.DocumentListResponseDTO;
-import br.com.persondoc.database.persondoc.api.dtos.DocumentResponseDTO;
+import br.com.persondoc.database.persondoc.api.dtos.responses.DocumentListResponseDTO;
+import br.com.persondoc.database.persondoc.api.dtos.responses.DocumentResponseDTO;
 import br.com.persondoc.database.persondoc.api.dtos.requests.DocumentDTO;
+import br.com.persondoc.database.persondoc.exceptions.DocumentNotFoundException;
 import br.com.persondoc.database.persondoc.service.IDocumentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class DocumentAPI {
     }
 
     @GetMapping("/find/{document}")
-    public DocumentResponseDTO find(@PathVariable("document") Long documentNumber) {
+    public DocumentResponseDTO find(@PathVariable("document") String documentNumber) throws DocumentNotFoundException {
         return DocumentResponseDTO.builder()
                 .data(
                         DocumentDTOAdapter.convertTo(
@@ -51,7 +52,7 @@ public class DocumentAPI {
                 .build();
     }
 
-    @PutMapping("/change/{namechange}")
+    @PutMapping("/change/{name-change}")
     public DocumentResponseDTO changeWithBody(@RequestBody DocumentDTO documentDTO) {
         return DocumentResponseDTO.builder()
                 .data(

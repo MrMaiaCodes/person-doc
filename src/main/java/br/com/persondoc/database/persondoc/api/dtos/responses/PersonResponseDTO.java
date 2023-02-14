@@ -1,4 +1,4 @@
-package br.com.persondoc.database.persondoc.api.dtos;
+package br.com.persondoc.database.persondoc.api.dtos.responses;
 
 import br.com.persondoc.database.persondoc.api.dtos.requests.PersonDTO;
 import lombok.Builder;

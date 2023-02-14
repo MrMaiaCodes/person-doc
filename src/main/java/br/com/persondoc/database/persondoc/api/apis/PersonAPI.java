@@ -2,11 +2,13 @@ package br.com.persondoc.database.persondoc.api.apis;
 
 import br.com.persondoc.database.persondoc.adapters.PersonAdapter;
 import br.com.persondoc.database.persondoc.adapters.PersonDTOAdapter;
-import br.com.persondoc.database.persondoc.api.dtos.PersonListResponseDTO;
-import br.com.persondoc.database.persondoc.api.dtos.PersonResponseDTO;
+import br.com.persondoc.database.persondoc.api.dtos.responses.errors.ErrorResponseDTO;
+import br.com.persondoc.database.persondoc.api.dtos.responses.PersonListResponseDTO;
+import br.com.persondoc.database.persondoc.api.dtos.responses.PersonResponseDTO;
 import br.com.persondoc.database.persondoc.api.dtos.requests.PersonDTO;
 import br.com.persondoc.database.persondoc.api.dtos.requests.PersonsNewDocumentDTO;
-import br.com.persondoc.database.persondoc.repository.entities.Person;
+import br.com.persondoc.database.persondoc.exceptions.DocumentNotFoundException;
+import br.com.persondoc.database.persondoc.exceptions.PersonNotFoundException;
 import br.com.persondoc.database.persondoc.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,8 +32,21 @@ public class PersonAPI {
                 ).build();
     }
 
-    @GetMapping("/find/{name}")
-    public PersonListResponseDTO find(@PathVariable("name") String name) {
+
+    @GetMapping("/find/{person}")
+    public PersonResponseDTO find(@PathVariable("person") String personName) throws PersonNotFoundException {
+
+        return PersonResponseDTO.builder()
+                .data(
+                        PersonDTOAdapter.convertTo(
+                                personService.findPersonByName(personName)
+                        )
+                ).build();
+
+    }
+
+    @GetMapping("/list")
+    public PersonListResponseDTO listAllPersons() {
         return PersonListResponseDTO.builder()
                 .data(
                         PersonDTOAdapter.convertToList(
@@ -53,8 +68,21 @@ public class PersonAPI {
     }
 
     @PostMapping("/add/document")
-    public ResponseEntity<Person> addDocument(@RequestBody PersonsNewDocumentDTO newDocumentDTO) {
-        personService.addDocument(newDocumentDTO.getPersonName(), newDocumentDTO.getDocumentNumber());
+    public ResponseEntity addDocument(@RequestBody PersonsNewDocumentDTO newDocumentDTO) {
+
+        try{
+            personService.addDocument(newDocumentDTO.getPersonName(), newDocumentDTO.getDocumentNumber());
+
+        } catch (PersonNotFoundException | DocumentNotFoundException exception) {
+
+            return ResponseEntity.status(HttpStatus.NO_CONTENT)
+                    .body(ErrorResponseDTO
+                            .builder()
+                            .errorMessage(exception.getMessage())
+                            .build())
+                    ;
+
+        }
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }

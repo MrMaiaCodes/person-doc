@@ -1,11 +1,14 @@
 package br.com.persondoc.database.persondoc.service.impl;
 
+import br.com.persondoc.database.persondoc.exceptions.DocumentNotFoundException;
+import br.com.persondoc.database.persondoc.exceptions.PersonNotFoundException;
 import br.com.persondoc.database.persondoc.repository.IPersonRepository;
 import br.com.persondoc.database.persondoc.repository.entities.Person;
 import br.com.persondoc.database.persondoc.service.AbstractValidateService;
 import br.com.persondoc.database.persondoc.service.IDocumentService;
 import br.com.persondoc.database.persondoc.service.IPersonService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,26 +23,23 @@ public class PersonService extends AbstractValidateService<Person> implements IP
     private IDocumentService documentService;
 
     @Override
-    public Person findPersonByName(String personName) {
+    public Person findPersonByName(String personName) throws PersonNotFoundException {
 
         var personFind = personRepository.findPersonByName(personName);
         if (personFind != null) {
             return personFind;
         } else {
-            System.out.println("Person not found!");
+            throw new PersonNotFoundException("Error in finding " + personName + ".");
         }
-        return null;
     }
 
     @Override
-    public void addDocument(String personName, Long documentNumber) {
+    public void addDocument(String personName, String documentNumber) throws PersonNotFoundException,
+            DocumentNotFoundException {
         var personFind = findPersonByName(personName);
         var documentFind = documentService.findDocumentByNumber(documentNumber);
 
-        if (personFind != null && documentFind != null) {
-            personFind.getDocuments().add(documentFind);
-        }
-
+        personFind.getDocuments().add(documentFind);
     }
 
     @Override
@@ -53,8 +53,12 @@ public class PersonService extends AbstractValidateService<Person> implements IP
     }
 
     @Override
-    public void delete(Person person) {
-        personRepository.delete(person);
+    public void delete(Person person) throws PersonNotFoundException {
+
+        var personFind = findPersonByName(person.getName());
+        if (personFind != null) {
+            personRepository.delete(person);
+        }
     }
 
     @Override
@@ -63,16 +67,17 @@ public class PersonService extends AbstractValidateService<Person> implements IP
     }
 
     @Override
-    public Person update(Person person) {
+    public Person update(Person person) throws PersonNotFoundException {
 
-        var personFind = personRepository.findPersonByName(person.getName());
-        personFind.setName(person.getName());
-        personFind.setAge(person.getAge());
-        personFind.setDocuments(person.getDocuments());
-        personFind.setId(person.getId());
+        var personFind = findPersonByName(person.getName());
 
-
-        return null;
+        if (personFind != null) {
+            personFind.setName(person.getName());
+            personFind.setAge(person.getAge());
+            personFind.setDocuments(person.getDocuments());
+            personFind.setId(person.getId());
+        }
+        return personFind;
     }
 
     @Override

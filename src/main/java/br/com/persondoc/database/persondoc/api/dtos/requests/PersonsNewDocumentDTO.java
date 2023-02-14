@@ -13,5 +13,5 @@ public class PersonsNewDocumentDTO {
 
     private String personName;
 
-    private Long documentNumber;
+    private String documentNumber;
 }
