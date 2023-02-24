@@ -7,9 +7,6 @@ import lombok.Data;
 @Builder
 public class ErrorResponseDTO {
 
-    private String errorMessage;
-
     private ErrorSpecificationDTO data;
 
-    private String metaData;
 }

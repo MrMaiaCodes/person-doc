@@ -1,12 +1,12 @@
 package br.com.persondoc.database.persondoc.exceptions;
 
-public class PersonNotFoundException extends Exception{
+public class SaveMethodException extends Exception {
 
     private String code;
 
     private String message;
 
-    public PersonNotFoundException(String code, String message) {
+    public SaveMethodException(String code, String message) {
         super(message);
         this.code = code;
     }
@@ -14,4 +14,5 @@ public class PersonNotFoundException extends Exception{
     public String getCode() {
         return code;
     }
+
 }
