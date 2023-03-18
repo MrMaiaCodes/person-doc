@@ -35,6 +35,7 @@ public class DocumentService implements IDocumentService {
 
     @Override
     public void delete(Document document) throws DocumentNotFoundException {
+
         log.info("initialized DocumentService.delete");
         var documentFind = findDocumentByNumber(
                 document.getDocumentNumber());
@@ -53,16 +54,18 @@ public class DocumentService implements IDocumentService {
 
     @Override
     public Document update(Document document) throws DocumentNotFoundException {
+
         log.info("initialized DocumentService.update");
-        var documentFind = findDocumentByNumber(document.getDocumentNumber());
-        if (documentFind != null) {
-            log.info("processing update");
-            documentFind.setDocumentType(document.getDocumentType());
-            documentFind.setIdNumber(document.getIdNumber());
-            documentRepository.save(documentFind);
-        }
+        var documentFind = documentRepository.findById(document.getIdNumber());
+        var documentUpdate = documentFind.orElseThrow(
+                () -> new DocumentNotFoundException("P01", "Document Not Found")
+        );
+        log.info("processing update");
+        documentUpdate.setDocumentType(document.getDocumentType());
+        documentUpdate.setDocumentNumber(document.getDocumentNumber());
+
         log.info("update complete");
-        return documentFind;
+        return documentRepository.save(documentUpdate);
     }
 
     @Override
@@ -75,13 +78,13 @@ public class DocumentService implements IDocumentService {
             return documentFind;
         } else {
             log.error("document number not found");
-            throw new DocumentNotFoundException("P01", "Error finding document number " + documentNumber + ".");
+            throw new DocumentNotFoundException("D01", "Error finding document number " + documentNumber + ".");
         }
     }
 
     //@Override
     //protected boolean validate(Document document) {
-       // return validateLongNotZero(document.getDocumentNumber());
+    // return validateLongNotZero(document.getDocumentNumber());
     //}
 
 }

@@ -39,7 +39,7 @@ public class Person {
     private Long age;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "DT_DOCUMENTS")
+    @JoinColumn(name = "PERSON_ID")
     private List<Document> documents;
 
     public Long getId() {

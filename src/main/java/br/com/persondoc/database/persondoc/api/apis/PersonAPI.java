@@ -35,11 +35,11 @@ public class PersonAPI {
 
 
     @GetMapping("/find/{person}")
-    public PersonResponseDTO find(@PathVariable("person") String personName) throws PersonNotFoundException {
+    public PersonListResponseDTO find(@PathVariable("person") String personName) throws PersonNotFoundException {
 
-        return PersonResponseDTO.builder()
+        return PersonListResponseDTO.builder()
                 .data(
-                        PersonDTOAdapter.convertTo(
+                        PersonDTOAdapter.convertToList(
                                 personService.findPersonByName(personName)
                         )
                 ).build();
